@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나랑 만나줄래?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            /* 부드러운 핑크 배경 */
+            font-family: 'Jua', sans-serif;
+            /* 귀여운 폰트 */
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* 부드러운 그림자 */
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* 원형 이미지 */
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 30px;
+            word-break: keep-all;
+            line-height: 1.4;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 50px;
+            /* 둥근 버튼 */
+            border: none;
+            transition: all 0.3s ease;
+            font-family: 'Jua', sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #yesBtn {
+            background-color: #ff4d88;
+            /* 진한 핑크 */
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff3377;
+            box-shadow: 0 6px 10px rgba(255, 51, 119, 0.3);
+        }
+
+        #noBtn {
+            background-color: #f0f0f0;
+            /* 연한 회색 */
+            color: #333;
+        }
+
+        .shy-text {
+            font-size: 14px;
+            color: #888;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <!-- 귀여운 고양이 GIF (부끄러워하는 모습) -->
+        <div id="mainImg" style="font-size: 150px; margin-bottom: 20px;">😽</div>
+        <h1>나랑 발렌타인 같이 보낼래?</h1>
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">당연하지!</button>
+            <button id="noBtn" onmouseover="moveButton()">아니..</button>
+        </div>
+        <p class="shy-text">No 버튼은 좀 부끄러운가봐..</p>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+
+            // 처음 움직일 때 fixed로 변경하여 화면 전체를 자유롭게 돌아다니게 함
+            if (btn.style.position !== 'fixed') {
+                btn.style.position = 'fixed';
+                btn.style.zIndex = '100'; // 카드보다 위에 뜨게
+            }
+
+            // 화면 전체 범위 내에서 랜덤 위치 계산
+            const x = Math.random() * (window.innerWidth - btn.clientWidth);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight);
+
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            // 폭죽 효과
+            confetti({ particleCount: 150, spread: 60, origin: { y: 0.6 } });
+
+            // 기존 내용 모두 없애고 GIF와 메시지로 변경
+            const card = document.querySelector('.card');
+            card.innerHTML = `
+                <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #333;">야호! 이따 봐! 😍</div>
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2RhbWk4OHNqcWg0MDQxM29xMnEzY2FrMjRqanIzNWw1Z3gwZzR6MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lH4ADRtAYnGsLe/giphy.gif" 
+                     style="width: 100%; height: auto; border-radius: 10px; max-width: 400px; display: block; margin: 0 auto;">
+            `;
+        }
+    </script>
+</body>
+
+</html>
